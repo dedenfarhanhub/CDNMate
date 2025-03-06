@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Log;
 
 class ImageOptimizer
 {
-    public function optimize($file): ?string
+    public function optimize($file, $compressionQuality = 80): ?string
     {
         try {
             $filename = md5(time() . $file->getClientOriginalName()) . '.' . $file->getClientOriginalExtension();
@@ -17,8 +17,13 @@ class ImageOptimizer
             $image = Image::make($file);
             $width = $image->width() * 99 / 100;
             $height = $image->height() * 99 / 100;
+            $image->resize($width, $height);
 
-            $image->resize($width, $height)->save($path, 80);
+            if($compressionQuality < 100){
+                $image->save($path, $compressionQuality);
+            }else{
+                $image->save($path);
+            }
 
             return $path;
         } catch (Exception $e) {

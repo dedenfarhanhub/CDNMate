@@ -16,7 +16,7 @@ class CDNMate
         $this->optimizer = $optimizer;
     }
 
-    public function upload($file, $path = 'uploads'): ?string
+    public function upload($file, $path = 'images', $compressionQuality = 80): ?string
     {
         $optimized = $this->optimizer->optimize($file);
         return $this->cdnService->upload($optimized, $path);

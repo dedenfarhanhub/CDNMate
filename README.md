@@ -34,7 +34,7 @@ CDNMATE_FALLBACK=true
 ```php
 use CDNMate;
 
-$imageUrl = CDNMate::upload($request->file('image'), 'profile-images');
+$imageUrl = CDNMate::upload($request->file('image'), 'profile-images', 90);
 
 echo $imageUrl;
 ```
@@ -45,7 +45,7 @@ Set `CDNMATE_FALLBACK=true` in `.env`.
 
 ### Custom Image Path
 ```php
-$imageUrl = CDNMate::upload($request->file('image'), 'custom-folder');
+$imageUrl = CDNMate::upload($request->file('image'), 'custom-folder', 90);
 ```
 
 ## Benchmark Results ⚡
