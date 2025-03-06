@@ -29,22 +29,38 @@ CDNMate supports **Auto Discovery** for Laravel 10 & 11.
 
 ---
 
+## Publish Configuration
+```bash
+php artisan vendor:publish --tag=cdnmate
+```
+
+---
+## Configuration
+```php
+[
+    'uploader_url' => env('CDN_MATE_UPLOADER_URL', 'https://cdnmate.io'),
+    'cdn_url' => env('CDN_MATE_URL', 'http://127.0.0.3/media/'),
+    'fallback' => env('CDN_MATE_FALLBACK', true),
+    'image_path' => env('IMAGE_MATE_PATH', 'uploads/'),
+];
+```
+---
 ## Usage
 ### Simple Upload
 ```php
 use CDNMate;
 
-$imageUrl = CDNMate::upload($request->file('image'), 'profile-images', 90);
+$imageUrl = CDNMate::upload($request->file('image'), 90);
 ```
 
 ### Graceful Degradation (Fallback ke Local Storage)
 #### CDNMate will automatically fallback to local storage if the CDN upload fails based on the configuration.
 ```php
-$imageUrl = CDNMate::upload($request->file('image'), 'profile-images', 90);
+$imageUrl = CDNMate::upload($request->file('image'), 90);
 ```
 #### Configuration:
 ```php
-CDN_FALLBACK=true
+CDN_MATE_FALLBACK=true
 ```
 
 ---

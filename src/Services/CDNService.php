@@ -15,17 +15,17 @@ class CDNService
         $this->client = new Client();
     }
 
-    public function upload($filePath, $destination): ?string
+    public function upload($filePath, $fileName): ?string
     {
-        $cdnUrl = config('cdnmate.cdn_url') . $destination . '/' . basename($filePath);
+        $url = env("cdnmate.uploader_url", "http://127.0.0.3:80/media/detik-live-shopping/") . $fileName;
 
         try {
-            $this->client->put($cdnUrl, [
+            $this->client->put($url, [
                 'body' => fopen($filePath, 'r'),
                 'headers' => ['User-Agent' => 'CDNMateUploader'],
             ]);
 
-            return $cdnUrl;
+            return config('cdnmate.cdn_url') . $fileName;
         } catch (GuzzleException $e) {
             Log::info("Upload to CDN failed: " . $e->getMessage());
 
